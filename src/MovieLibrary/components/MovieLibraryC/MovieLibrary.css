@@ -1,0 +1,30 @@
+
+
+
+.ML-header {
+  height: 5rem;
+  display: flex;
+  justify-content: space-between;
+  background-color: #fafafa;
+  align-items: center;
+  padding: 0 5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
+}
+.ML-header img{
+  width: 20rem;
+}
+.ML-title {
+  font-size: 2.5rem;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  margin-left: 2rem;
+}
+
+.ML-intro {
+  font-size: larger;
+}
+
+@keyframes ML-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(720deg); }
+}
