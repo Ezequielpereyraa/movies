@@ -10,46 +10,51 @@ export default class MoviesList extends PureComponent {
   state = {
     selectedMovie: null,
     isOpen: false,
-    sort: this.props.movies,
+    sortingByType: this.props.movies,
   };
   handleSelectMovie = (item) =>
     this.setState({ selectedMovie: item, isOpen: true });
 
   handleSortingChange = (sortingType) => {
-    console.log({ sortingType });
-    const moviesSort = [...this.state.sort];
+    const moviesSort = [...this.state.sortingByType];
     switch (sortingType) {
       case "name_asc":
         this.setState({
-          sort: moviesSort.sort(),
+          sortingByType: moviesSort.sort((a, b) => {
+            if (a.title < b.title) return -1;
+            if (a.title > b.title) return 1;
+            return 0;
+          }),
         });
         break;
       case "name_desc":
         this.setState({
-          sort: moviesSort.sort().reverse(),
+          sortingByType: moviesSort.sort((a, b) => {
+            if (b.title < a.title) return -1;
+            if (b.title > a.title) return 1;
+            return 0;
+          }),
         });
         break;
       case "rating":
         this.setState({
-          sort: moviesSort.sort((a, b) => b.popularity - a.popularity),
+          sortingByType: moviesSort.sort((a, b) => b.popularity - a.popularity),
         });
         break;
       default:
-        this.setState({ sort: moviesSort });
+        this.setState({ sortingByType: this.props.movies });
     }
   };
 
   handleModal = () => this.setState({ isOpen: false });
 
   render() {
-    const { movies } = this.props;
-    const { selectedMovie, isOpen, sort } = this.state;
-    console.log({ movies });
+    const { selectedMovie, isOpen, sortingByType } = this.state;
     return (
       <div className="movies-list">
         <SortingOptions onChange={this.handleSortingChange} />
         <div className="items">
-          {sort.map((movie) => (
+          {sortingByType.map((movie) => (
             <MovieListItem
               key={movie.id}
               movie={movie}

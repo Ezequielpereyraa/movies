@@ -10,13 +10,21 @@ import MoviesList from "../MovieList/MoviesList";
 
 class MovieLibrary extends Component {
   static propTypes = {};
+  state = {
+    loader: false,
+  };
 
   componentDidMount() {
+    this.setState({ loader: true });
     const { fetchTopRatedMovies } = this.props;
-    fetchTopRatedMovies();
+    setTimeout(() => {
+      fetchTopRatedMovies();
+      this.setState({ loader: false });
+    }, 2000);
   }
 
   render() {
+    const { loader } = this.state;
     const { movies } = this.props;
     return (
       <div className="MovieLibrary">
@@ -25,7 +33,8 @@ class MovieLibrary extends Component {
           <h1 className="ML-title">Movies</h1>
         </header>
         <div className="ML-intro">
-          {movies && movies.length && <MoviesList movies={movies} />}
+          {loader && <h1>Load...</h1>}
+          {movies && Boolean(movies.length) && <MoviesList movies={movies} />}
         </div>
       </div>
     );
